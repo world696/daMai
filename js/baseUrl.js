@@ -1,0 +1,1 @@
+var baseUrl = 'https://www.fastmock.site/mock/2aaee852542b5ff3b430999a23c86c46/daMai';

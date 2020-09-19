@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>分类</title>
+		<link rel="stylesheet" type="text/css" href="./css/classify.css"/>
+	</head>
+	<body>
+		<!-- 头部 -->
+		<header class="dm-header">
+		   <div class="dm-header-content">
+		      <div class="header-logo">
+				  <a href="#">
+					  <img src="img/01%20header-logo.png" >
+				  </a>
+			  </div>
+			  <div class="header-location">
+				  <img src="img/02%20header-location.png" >
+				  <span>全国</span>
+				  <img src="img/03%20header-arrowDown.png" >
+			  </div>
+			  <div class="header-leftItem">
+				  <a href="#">首页</a>
+				  <a href="classify.html">分类</a>
+			  </div>
+			  <div class="header-search"></div>
+			  <div class="header-rightItem"></div>
+		   </div>
+		</header>
+		<!-- 主体部分 -->
+		<div class="main">
+			<div class="main-content">
+				<div class="main-left">
+					<div class="main-left-content">
+						<div class="select-item">
+							<div class="select-city">
+								<span class="select-title">城 市：</span>
+								<div class="city-detail">
+									<div class="city-detail-title">
+										当前选中城市
+										<span class="city-title">全部</span>
+									</div>
+									<div class="city-detail-list">
+										<ul>
+											<li class="active">全部</li>
+											<li>上海</li>
+											<li>北京</li>
+											<li>杭州</li>
+											<li>成都</li>
+										</ul>
+										<div class="more-city">更多</div>
+									</div>
+								</div>
+							</div>
+							<div class="select-classify">
+								<span class="select-title">分 类：</span>
+								<div class="classify-detail">
+									<div class="classify-detail-list">
+										<ul>
+											<li class="active">全部</li>
+											<li>话剧歌剧</li>
+											<li>展览休闲</li>
+											<li>音乐会</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="select-time">
+								<span class="select-title">时 间：</span>
+								<div class="time-detail">
+									<div class="time-detail-list">
+										<ul>
+											<li class="active">全部</li>
+											<li>今天</li>
+											<li>明天</li>
+											<li>本周末</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					    <div class="search-list">
+							<div class="search-list-title">
+								<span>相关度排序</span>
+								<span>推荐排序</span>
+								<span>最近开场</span>
+								<span>最新上架</span>
+							</div>
+							<div class="search-list-detail">
+								<div class="search-detail">
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="main-right">
+					<div class="main-right-content"></div>
+				</div>
+			</div>
+		</div>
+		<!-- 底部 -->
+		<footer class="dm-footer"></footer>
+		<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.1.0/axios.min.js"></script>
+		<script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+		<script src="./js/baseUrl.js" ></script>
+		<script src="./js/api.js"></script>
+		<script type="text/javascript">
+			var cityDetail = $('.city-detail-list').find("li");
+			var classifyDetail = $('.classify-detail-list').find("li");
+			var timeDetail = $('.time-detail-list').find("li");
+			var city = '',type = '';
+			// 请求全部数据
+			getClassifyData(city,type);
+			//点击城市会切换到相应的城市
+			cityDetail.each(function(i,item){
+				$(item).click(()=>{
+					$(this).siblings().removeClass("active").end().addClass("active");
+					if($(this).text() == "全部"){
+						$(".city-title").html("全国");
+					}else{
+						$(".city-title").html($(this).text());
+					}
+					city = $(this).text() == "全部" ? '':$(this).text() ;
+					getClassifyData(city,type);
+				})
+			})
+			//点击分类会切换到相应的类型
+			classifyDetail.each(function(i,item){
+				$(item).click(()=>{
+					$(this).siblings().removeClass("active").end().addClass("active");
+					type = $(this).text() == "全部" ? '':$(this).text() ;
+					getClassifyData(city,type);
+				})
+			})
+			//点击时间
+			timeDetail.each(function(i,item){
+				$(item).click(()=>{
+					$(this).siblings().removeClass("active").end().addClass("active");
+			    })
+			})
+			// 请求数据
+		    function getClassifyData(city,type){
+				$.post(baseUrl+api.classifyList,{city,type},function(res){
+					console.log(res);
+					showClassifyData(res.classifyList);
+				})
+			}
+			// 渲染到select-classify
+			function showClassifyData(data){
+				var str = '';
+				data.forEach((item)=>{
+					str +=`<div class="search-detail">
+									<a href="#">
+										<img src="${item.img}" onclick="jump(${item.id})">
+									</a>
+									<div class="desc">
+										<span class="desc-title">
+											【${item.city}】
+											<a href="#" onclick="jump(${item.id})">${item.title}</a>
+										</span>
+										<span class="desc-location">${item.city} | ${item.type}</span>
+										<span class="desc-time">${item.date}</span>
+										<div class="desc-price">
+											<span>价格待定</span>
+											未开售
+										</div>
+									</div>
+								</div>`
+				});
+				$('.search-detail').html(str);
+			}
+			function jump(id){
+				console.log(id);
+				localStorage.setItem('ticketId',id);
+				window.open("./ticketDetail.html");
+			}
+		</script>
+	</body>
+</html>

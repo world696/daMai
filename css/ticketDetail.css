@@ -1,0 +1,251 @@
+*{
+    margin: 0;
+    padding: 0;
+	list-style: none;
+	text-decoration: none;
+	color: #2D2D2D;
+	border: none;
+	outline: none;
+	font-style: normal;
+}
+/* 头部 */
+.dm-header{
+    height: 72px;
+    width: 100%;
+    box-shadow: 0 2px 16px 0 rgba(220,220,220,.5);
+}
+.dm-header-content{
+    width: 1100px;
+	height: 100%;
+    margin: 0 auto;
+	display: flex;
+	flex-direction: row;
+}
+  /* 头部logo */
+.header-logo,.header-location,.header-leftItem,.header-search,.header-rightItem{
+	height: 100%;
+}
+.header-logo>a>img{
+	height: 42px;
+	width: 92px;
+	margin: 15px 0px 0px;
+}
+   /* 头部定位 */
+.header-location{
+	display: flex;
+	align-items: center;
+	margin: 0px 0px 0px 54px;
+	cursor: pointer;
+	position: relative;
+}
+.header-location>img{
+	width: 12px;
+	vertical-align: middle;
+}
+.header-location>span{
+	margin: 0px 5px;
+	color: #2D2D2D;
+	font-size: 16px;
+}
+   /* 头部首页和分类 */
+.header-leftItem{
+	display: flex;
+	align-items: center;
+	padding-left: 30px;
+}
+.header-leftItem>a{
+	margin-right: 10px;
+	height: 72px;
+	line-height: 72px;
+	font-size: 16px;
+}
+
+/* 主体部分 */
+.main{
+    width: 100%;
+    height: calc(100vh - 422px);
+}
+.main-content{
+	width: 1100px;
+	margin: 0 auto;
+	height: 900px;
+	display: flex;
+	justify-content: flex-start;
+}
+/* 主体左侧 */
+.main-left{
+	/* border: 1px solid #dfdfdf; */
+	width: 844px;
+	height: 100%;
+	margin-right: 10px;
+	padding: 0 24px;
+	font-size: 14px;
+	color: #333;
+	box-sizing: border-box;
+	border-left:1px solid #dfdfdf;
+	border-right:1px solid #dfdfdf;
+	display: flex;
+	justify-content: flex-start;
+}
+.main-left>img{
+	width: 270px;
+	height: 360px;
+	margin-right: 20px;
+}
+.ticket-detail-title .all-ticket{
+	width: 60px;
+	height: 24px;
+	text-align: center;
+	line-height: 24px;	
+	font-size: 14px;
+	color: #fff;
+	background: linear-gradient(-45deg,#ff1268,#ff5593);
+	border-bottom-right-radius: 10px;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+}
+.ticket-detail-title>span{
+	font-size: 22px;
+	color: #000;
+}
+.ticket-detail-info{
+	display: flex;
+	flex-direction: column;
+}
+.ticket-detail-info>span{
+	font-size: 16px;
+	color: #4a4a4a;
+	padding-top: 8px;
+}
+.session,.ticket-stall,.number,.sum{
+	display: block;
+	font-size: 16px;
+	color: #000;
+	height: 48px;
+}
+.session,.ticket-stall,.number,.sum{
+	display: flex;
+	flex-direction: row;
+	margin-top: 20px;
+}
+.session>div{
+	border:1px solid #ff2869;
+	background: #fff;
+	width: 186px;
+	height: 38px;
+	text-align: center;
+	line-height: 38px;
+	border-radius: 5px;
+	margin: 0px 6px 6px 19px;
+	cursor: pointer;
+}
+.ticket-stall>ul{
+	display: flex;
+	flex-direction: row;
+}
+.ticket-stall>ul>li{
+	display: block;
+	/* background: #fff; */
+	border:1px solid #ff2869;
+	width: 46px;
+	height: 38px;
+	text-align: center;
+	line-height: 38px;
+	border-radius: 5px;
+	margin: 0px 6px 6px 19px;
+	cursor: pointer;
+}
+.active{
+	background-color: #ff1268;
+	color: #FFFFFF;
+}
+.session-time{
+	color: #ff1268;
+	font-size: 12px;
+}
+.ticket-stall-desc{
+	font-size: 12px;
+}
+/* 数量 */
+.number{
+	position: relative;
+}
+.sub,.add{
+	background-color: #e5e5e5;
+	/* color: #ccc; */
+	display: inline-block;
+	width: 24px;
+	font-size: 14px;
+	border-radius: 2px;
+	border: 1px solid #e5e5e5;
+	background-color: #f2f3f4;
+	box-sizing: border-box;
+	text-align: center;
+	cursor: pointer;
+	vertical-align: middle;
+	transition: all .2s linear;
+	line-height: 26px;
+	height: 28px;
+}
+.sub{
+	color: #000;
+	margin-left: 40px;
+	margin-right: 11px;
+}
+.add{
+	 color: #000;
+	 margin-left: 20px;
+}
+.number>div>input{
+	text-align: center;
+	display: inline-block;
+	margin: 0 4px;
+	width: 10px;
+	height: 24px;
+}
+.limit-buy{
+	font-size: 12px;
+	color: #999;
+	position: absolute;
+	bottom: 21px;
+	left: 192px;
+}
+/* 合计 */
+.sum{
+	position: relative;
+}
+.sum>i{
+	color: #ff2d79;
+	margin-left: 20px;
+	height: 24px;
+}
+.login-see{
+	font-size: 12px;
+	color: #999;
+	position: absolute;
+	bottom: 26px;
+	left: 119px;
+}
+/* 立即购买 */
+.buy-now{
+	margin-top: 25px;
+	margin-left: 50px;
+	width: 210px;
+	height: 40px;
+	line-height: 40px;
+	background-color: #ff2d79;
+	color: #fff;
+	font-size: 14px;
+	font-weight: 400;
+	border-radius: 3px;
+	cursor: pointer;
+}
+.buy-now:hover{
+    background-color: #ff357e;
+}
+/* 主体右侧 */
+.main-right{
+	width: 244px;
+	height: 100%;
+	border: 1px solid #dfdfdf;
+}

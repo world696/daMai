@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>ticketDetail</title>
+		<link rel="stylesheet" type="text/css" href="./css/ticketDetail.css"/>
+	</head>
+	<body>
+		<!-- 头部 -->
+		<header class="dm-header">
+		   <div class="dm-header-content">
+		      <div class="header-logo">
+				  <a href="#">
+					  <img src="img/01%20header-logo.png" >
+				  </a>
+			  </div>
+			  <div class="header-location">
+				  <img src="img/02%20header-location.png" >
+				  <span>全国</span>
+				  <img src="img/03%20header-arrowDown.png" >
+			  </div>
+			  <div class="header-leftItem">
+				  <a href="#">首页</a>
+				  <a href="classify.html">分类</a>
+			  </div>
+			  <div class="header-search"></div>
+			  <div class="header-rightItem"></div>
+		   </div>
+		</header>
+		<div class="main"></div>
+		<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.1.0/axios.min.js"></script>
+		<script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+		<script src="./js/baseUrl.js" ></script>
+		<script src="./js/api.js"></script>
+		<script type="text/javascript">
+			var id = localStorage.getItem("ticketId");  //获取每张票的id
+			var num = 0;  //获取当前票的数量
+			var numTotal = 0;  //获取当前票价总和
+			var price = 0;  //单价
+			console.log(num);
+			$.post(baseUrl+api.classifyList,{id:id},function(res){
+				console.log(res);
+				showTicketData(res.classifyList[0]);
+			})
+			//根据id获取对应的买票页
+			function showTicketData(data){
+				console.log(data)
+				let str = '';
+				str = `<div class="main-content">
+						          <div class="main-left">
+							        <img src='${data.img}' >
+							        <div class="ticket-detail">
+								    <div class="ticket-detail-title">
+									   <span class="all-ticket">总票代</span>
+									   <span>【${data.city}】【${data.type}】乐返80年代经典串烧之夜</span>
+								    </div>
+								    <div class="ticket-detail-info">
+									   <span class="time">时间：${data.date}</span>
+									   <span class="place">场馆：${data.city} | ${data.type}The Pearl</span>
+								    </div>
+								    <div class="ticket-detail-order">
+									<div class="session">
+										场次
+										<div>
+											<span class="session-time">${data.date} ${data.type}</span>
+										</div>
+									</div>
+									<div class="ticket-stall">
+										票档
+										<ul id="priceList">
+											
+										</ul>
+										
+									</div>
+									<div class="number">
+										数量
+										<span class="sub" onclick="sub()">-</span>
+										<div>
+											<input type="text" value="1" id="num"/>张
+										</div>
+										<span class="add" onclick="add()">+</span>
+										<span class="limit-buy">每笔订单限购6张</span>
+									</div>
+									<div class="sum">
+										合计
+										<i>￥</i>
+										<span class="num-total"></span>
+										<span class="login-see">登录后查看是否享受优惠</span>
+									</div>
+									<button type="button" class="buy-now">立即购买</button>
+								</div>
+							</div>
+						</div>
+						<div class="main-right"></div>
+					</div>`
+			$('.main').html(str);
+			//票价渲染
+			showPrice(data.price);
+			}
+			// 将票价渲染到票档这
+			function showPrice(data){
+				let str = '';
+				data.forEach((item,i)=>{
+					str +=`<li class="ticket-stall-desc" onclick="changeActive(${i})">${item}</li>`
+				});
+				$('#priceList').html(str);
+				$($('.ticket-stall-desc')[0]).addClass('active');
+				//渲染总价
+				showSumTotal();
+			}
+			// 切换票价
+			function changeActive(i){
+				console.log(i);
+				// 切换票价对应数量变为1
+				$('#num').val(1);
+				$('.ticket-stall-desc').each(function (i,item){
+					$(this).removeClass('active');
+				});
+				$($('.ticket-stall-desc')[i]).addClass('active');
+				//渲染总价
+				showSumTotal();
+			}
+			// 点击数量可增加/减少 且只能出现数字 并且最多可定六张票
+			function add(){
+				num = $("#num").val();
+				if(num >= 6){
+					num = 6;
+				}else{
+					num++;
+				}
+				$("#num").val(num);
+				showSumTotal();
+			}
+			function sub(){
+				num = $("#num").val();
+				if(num <= 1){
+					num = 1;
+				}else{
+					num--;
+				}
+				$("#num").val(num);
+				showSumTotal();
+			}
+			//显示出票价总合
+			function showSumTotal(){
+				num = Number($("#num").val());
+				price =Number( $('.active').text());
+				numTotal = num * price ;
+				$('.num-total').html(numTotal);
+			}
+			// 手动输入数量进行限制以及更改票价
+			$(document).keyup(()=>{
+				console.log($('#num').val());
+				num = $('#num').val();
+				var reg = /^[1-9]*$/ ;
+				if(reg.test(num)){
+					if(Number(num)>=6){
+						num = 6;
+						$('#num').val(num);
+						}
+					showSumTotal();
+				}else{
+					num = 1;
+					$('#num').val(num);
+					showSumTotal();
+				}
+			})
+		</script>
+	</body>
+</html>
